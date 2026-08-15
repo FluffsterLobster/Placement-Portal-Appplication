@@ -1,0 +1,26 @@
+{% extends 'forms.html' %}
+
+{% block heading %}
+    Edit Placement Drive
+{% endblock %}
+
+{% block description %}
+    Edit details of your placement drive
+{% endblock %}
+
+{% block inline %}
+    <div>{{ form.username.label }} {{ form.username() }}</div>
+    <div>{{ form.job_title.label }} {{ form.job_title() }}</div>
+    
+{% endblock %}
+{% block block %}
+    {{ form.job_description.label }} {{ form.job_description(style="height:8rem") }} 
+{%endblock%}
+
+{% block inline2 %}
+    <div class="form-group">{{ form.el_criteria.label }} {{ form.el_criteria() }}</div>
+    <div>{{ form.location.label }} {{ form.location() }}</div>
+    <div>{{ form.salary.label }} {{ form.salary() }}</div>
+    <div>{{ form.app_deadline.label }} {{ form.app_deadline() }}</div>
+    {{ form.submit() }}
+{% endblock %}

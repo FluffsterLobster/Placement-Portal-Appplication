@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+           Placement Coordination Cell
+        {% endblock %}
+    </title>
+    {% block header %}
+    <div class="header">
+    <div class="header_content">
+        <div class="small_gap_card">
+        <p class="h2f__"> Placement Coordination Cell </p>
+        </div>
+        <div class="med_gap_card">
+        <a href="{{ url_for('auth.student_register') }}" class="button_flat2">
+            <svg width="16" height="16">
+            <use href="/static/sprites.svg#logout"></use>
+        </svg>Register</a>
+        
+        <a href="{{ url_for('auth.student_login') }}" class="button_flat2">
+            <svg width="16" height="16">
+            <use href="/static/sprites.svg#logout"></use>
+        </svg>Login</a>
+        </div>
+    </div>
+    </div>
+    {% endblock %}
+    {% block style %}
+    <link rel = "icon" type="image/svg+xml" href="/static/sprites.svg#logout">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+    />
+    <link 
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}" /> 
+    {% endblock %}
+</head>
+    
+    <body data-script-root="{{ request.script_root|tojson }}">
+        <div class="container">
+        
+        {% block navbar %}         
+        {% if role == "Admin" or role == "Company" or role == "Student" %}
+          
+        
+          <div class="header" style="border-width: 0rem; padding: 3rem 0rem 5rem 0rem;     background-color:#fff0">
+            <nav class="primary" style="width:100%">
+              {% if role == 'Admin' %}
+              <div class="header_content" style="justify-content:space-between">
+                <div class="rounded_button_list"> 
+                  <a href="{{ url_for('ad.admin_dashboard') }}" class="rounded_button">Overview</a>
+                  <a href="{{ url_for('ad.list_drives') }}" class="rounded_button">Placement Drives</a>
+                  <a href="{{ url_for('ad.list_users') }}" class="rounded_button">User Management</a>
+                  <a href="{{ url_for('ad.list_applications') }}" class="rounded_button">Student Applications</a> 
+                </div>                   
+                <div class="med_gap_card">
+                    <form method="GET" action="{{ url_for('ad.search_users')}}"> <input class = "button_flat2" name="q" value="{{ query if query else '' }}" placeholder="Search users"></form>
+                              
+                    <form method="GET" action="{{ url_for('ad.search_drives')}}"> <input class = "button_flat2" name="q" value="{{ query if query else '' }}" placeholder="Search drives"></form>
+                </div>
+              {% elif role == 'Company' %}
+                <div class="rounded_button_list">
+                  <a href="{{ url_for('cp.company_dashboard') }}" class="rounded_button">Overview</a>
+                  <a href="{{ url_for('cp.c_applications') }}" class="rounded_button">Applications</a>
+                  <a href="{{ url_for('cp.c_placement_drives') }}" class="rounded_button">Placement Drives</a>
+                </div>
+              {% elif role == 'Student' %}
+                <div class="rounded_button_list">
+                  <a href="{{ url_for('sd.student_dashboard') }}" class="rounded_button">Overview</a>
+                  <a href="{{ url_for('sd.s_placement_drives') }}" class="rounded_button">Placement Drives</a>
+                  <a href="{{ url_for('sd.s_applications') }}" class="rounded_button">My Applications</a>
+                </div>
+
+              {% endif %}
+              
+            </nav>
+          </div> 
+          {% endif %}
+        {% endblock %}
+
+      {% block content %}
+          
+      
+      {% endblock %}
+          
+    
+      {% block scripts %}
+      
+      
+
+      {% with flashes = get_flashed_messages(with_categories=True) %}
+        {% if flashes %}
+          <!-- https://stackoverflow.com/questions/63042168/using-jinja2-with-flask-inside-javascript-script-tags-to-render-data -->
+          <input type="hidden" id="flashes" value="{{ dict(flashes) }}" />
+        {% endif %}
+      {% endwith %}
+
+      <!--{% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+             <div>{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+      {% endwith %}-->
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+      const TOASTER_STORE = "#toaster-store";
+      const toaster = new Notyf({ duration: 4000, dismissible: true, ripple:true });
+      createToaster(document.querySelector("#flashes"));
+
+      function createToaster(element) {
+        const messageMethod = (m) =>
+          toaster.open({ type: m[0], message: m[1] });
+
+        const json = element?.value?.replaceAll("'", '"');
+        Object.entries(JSON.parse(json ?? "{}")).forEach(messageMethod);
+
+        const showMessages = localStorage.getItem(TOASTER_STORE) ?? "[]";
+        JSON.parse(showMessages).forEach(messageMethod);
+        localStorage.removeItem(TOASTER_STORE);
+      }
+    </script>
+
+      {% endblock %}
+        
+</body>
+</html>

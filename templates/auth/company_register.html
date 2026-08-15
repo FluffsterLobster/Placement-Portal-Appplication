@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+
+<div class="login_card">
+<h1 class="card_header" style="justify-content:center;"> College Placement Portal</h1>
+<div class='small2_gap_card'>
+  <div class="rounded_button_list" style="align-self:center">
+      <a href="{{ url_for('auth.student_register') }}" class="rounded_button">Student</a>
+      <a href="{{ url_for('auth.company_register') }}" class="rounded_button">Company</a>
+  </div>
+  
+  <p class="h2f__">Sign up as {{role}} </p>
+
+ <form class="form small2_gap_card" action="" style="align-self:center" method="POST">
+  {{form.hidden_tag()}}
+  <div class="form-group">
+    {{ form.cntct_mail.label() }}
+    {{ form.cntct_mail(class="input_cen", required=True, placeholder="Enter HR mail") }}
+  </div>
+  <div class="form-group">
+    {{ form.username.label() }}
+    {{ form.username(class="input_cen", required=True, placeholder="Enter your username") }}
+  </div>
+    
+  <div class="form-group">
+    {{ form.password.label() }}
+    {{ form.password(class="input_cen", required=True, placeholder="Enter your password ") }}
+  </div>
+  <div class="form-group">
+    {{ form.website.label() }}
+    {{ form.website(class="input_cen", required=True, placeholder="Enter your official website url") }}
+  </div>
+  
+    {{ form.submit(class="button_flat") }}
+  
+</form> 
+</div>
+</div>
+{% endblock %}
+

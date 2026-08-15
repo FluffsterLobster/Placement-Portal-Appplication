@@ -1,0 +1,28 @@
+{% extends 'layout_2.html' %}
+
+{% block content %}
+
+<div class="big_gap_card horizontal_card_net" style="width:100%; background:var(--blue-1)">
+
+<div class="card_header" >
+            <h1 style="line-height:0.6rem;"> My Applications </h1>
+            <h3>Track the status of all applications</h3>
+</div>
+
+{% for d in drives %}
+{% for a in applications %}
+{% if d.sts == "Approved" and d.id == a.drive_id %}
+
+    <div class="horizontal_card_net">
+        <div><p class="h2f__" style="color: var(--grey-8)">{{d.job_title}}</p>
+        <h3>{{d.username}}</h3></div>
+        <p>{{a.created_at}}</p>
+        <p>{{a.sts}}</p>
+    </div>
+{% endif %}
+{% endfor %}    
+{% endfor %}
+
+{%endblock%}
+</div>
+  

@@ -1,0 +1,94 @@
+{% extends 'layout_2.html' %}
+
+{% block content %}
+
+<div class="big_gap_card" id="drives">
+
+
+
+<div class="card_header header_content ">
+    
+    <div>
+        <h1 style="line-height:0.6rem;"> Placement Management </h1>
+        <h3>Details of all placements</h3>
+    </div>
+    
+    <div class="med_gap_card">
+        <a href="{{ url_for('sd.s_download_resume', std_id=s.id) }}" class="button_flat">Download Resume</a>
+    </div>
+    
+</div>
+
+<div class="horizontal_card_net" style="width:100%; background:var(--blue-1)">
+<h2>Ongoing Placement Drives</h2>
+
+{% for d in drives %}
+{% if d.sts == 'Approved' and d.is_closed == False %}
+    <div class="horizontal_card_net">
+        <div><h2 style="color: var(--grey-8)">{{d.job_title}}</h2>
+        <h3>Location: {{d.location}}</h3>
+        <h3>Expected Salary:{{d.salary}}</h3>
+        <p>Application Deadline: {{d.app_deadline_}}</p>
+        </div>
+        <div id="view_more{{d.id}}" style="display:none">
+        <div> <h3>Job details:</h3> {{d.job_description}}</div>
+        <div> <h3>Eligibility Criteria</h3> {{d.el_criteria}}</div>
+        </div>
+        <div class="header_content">        
+          <form method="POST" action="{{url_for('sd.create_application', drive_id = d.id)}}">
+          {{form.hidden_tag()}}
+          {{ form.submit(class = "button_flat") }}
+          </form>  
+          <button data-target="#view_more{{d.id}}" class="button_flat"> View details</button>
+        </div>
+         
+    </div>
+{%else%}
+{% endif %}   
+{% endfor %}
+</div>
+
+<div class="horizontal_card_net" style="width:100%; background:var(--grey-2)">
+<h2>Past Placement Drives</h2>
+{% for d in drives %}
+{% if d.sts == 'Approved' and d.is_closed == True %}
+ <div class="horizontal_card_net">
+        <div><h2 style="color: var(--grey-8)">{{d.job_title}}</h2>
+        <h3>Location: {{d.location}}</h3>
+        <h3>Expected Salary:{{d.salary}}</h3>
+        <p>Application Deadline: {{d.app_deadline_}}</p>
+        </div>
+        <div id="view_more{{d.id}}" style="display:none">
+        <div> <h3>Job details:</h3> {{d.job_description}}</div>
+        <div> <h3>Eligibility Criteria</h3> {{d.el_criteria}}</div>
+        </div>
+      
+        <button data-target="#view_more{{d.id}}" class="button_flat" style="width:max-content"> View details</button>
+        
+         
+    </div>
+         
+{% else %}
+{% endif %}   
+{% endfor %}
+</div>
+{%endblock%}
+  
+{% block scripts %}
+    {{super()}}
+    <script>
+  
+  document.addEventListener("DOMContentLoaded", function () {
+    const buttons = document.querySelectorAll("[data-target]");
+
+    function ViewMMore() {
+      const targetId = this.dataset.target;
+      const target = document.querySelector(targetId);
+      if (target) target.style.display = "block";
+    }
+
+    buttons.forEach(btn => btn.addEventListener("click", ViewMMore));
+  });
+</script>
+    
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'forms.html' %}
+
+{% block heading %}
+    Edit Your Profile
+{% endblock %}
+
+{% block description %}
+    Change your details
+{% endblock %}
+
+{% block inline %}
+    <div>{{ form.username.label }} {{ form.username(class="deactive") }} </div>
+    <div>{{ form.email.label }} {{ form.email() }} </div>
+    <div>{{ form.name.label }} {{ form.name() }}</div>
+    
+    {{ form.submit(class="button_flat", style="width:auto" ) }}
+    
+{% endblock %}

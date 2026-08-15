@@ -1,0 +1,31 @@
+{% extends 'forms.html' %}
+
+{% block heading %}
+    Edit Your Profile
+{% endblock %}
+
+{% block description %}
+    Change your personal and academic details
+{% endblock %}
+
+{% block inline %}
+    <div>{{ form.username.label }} {{ form.username(class="deactive") }} </div>
+    <div>{{ form.name.label }} {{ form.name() }}</div>
+    <div>{{ form.email.label }} {{ form.email() }} </div>
+    <div>{{ form.dept_id.label }} {{ form.dept_id() }}</div>
+    <div>{{ form.grad_yr.label }} {{ form.grad_yr() }}</div>
+    {{ form.submit(class="button_flat", style="width:auto" ) }}
+    
+{% endblock %}
+{% block inline3 %}
+    
+    <form action="{{ url_for('sd.upload_resume', std_id=s.id) }}" method="POST" enctype="multipart/form-data"  class="med_gap_card" style="justify-content:flex-start">
+            {{form_.hidden_tag()}}
+            {{form_.resume( accept=".pdf,.doc,.docx")}}
+            {{form_.submit(class="button_flat2", style="width:max-content")}}
+          </form>
+  
+  
+        
+  
+{% endblock %}

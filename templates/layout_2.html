@@ -1,0 +1,77 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+<div class="header">
+    <div class="header_content">
+        <div class="small_gap_card">
+        <p class="h2f__"> {{role}} Portal </p>
+        <p> Welcome, {{current_user.name}} </p>
+        </div>
+        <div class="med_gap_card">
+        
+        
+        
+        {% if role == 'Student' %}
+            <a href="{{ url_for('sd.edit_profile_student')}}">
+        <svg width="25" height="25">
+            <use href="/static/sprites.svg#profile"></use>
+            <circle cx="12.5" cy="12.5" r="12" stroke="rgba(0, 0, 0, 0.10)" stroke-width="1" fill="none" />
+        </svg></a>
+        {% elif role == 'Company' %}
+            <a href="{{ url_for('cp.edit_profile_company')}}">
+        <svg width="25" height="25">
+            <use href="/static/sprites.svg#profile"></use>
+            <circle cx="12.5" cy="12.5" r="12" stroke="rgba(0, 0, 0, 0.10)" stroke-width="1" fill="none" />
+        </svg></a>
+        {% elif role == 'Admin' %}
+        <div>
+            <a onclick="dropdwn()" class="button_flat2">
+                <svg width="25" height="25">
+                    <use href="/static/sprites.svg#profile"></use>
+                    <circle cx="12.5" cy="12.5" r="12" stroke="rgba(0, 0, 0, 0.10)" stroke-width="1" fill="none" />
+                </svg>
+            </a>
+            <div id="admin_operations" class="dropdown-content">
+                <a href="{{ url_for('ad.edit_profile_admin')}}">Edit Profile</a>
+                <a href="{{ url_for('auth.create_admin')}}">Add Admin</a>
+            </div>
+        </div>
+        {% endif %}
+                
+        
+        <a class="button_flat2" href="{{ url_for('auth.logout') }}">
+            <svg width="16" height="16">
+            <use href="/static/sprites.svg#logout"></use>
+        </svg>Logout</a>
+        </div>
+        
+    </div>
+</div>
+    
+{% endblock %}
+
+
+{% block scripts %}
+
+{{super()}}
+    <script>
+
+function dropdwn() {
+  document.getElementById("admin_operations").classList.toggle("show");
+}
+
+
+window.onclick = function(event) {
+  if (!event.target.matches('.button_flat2')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+{% endblock %}

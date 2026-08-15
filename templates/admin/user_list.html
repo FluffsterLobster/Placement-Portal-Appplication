@@ -1,0 +1,99 @@
+{% extends 'layout_2.html' %}
+
+{% block content %}
+
+<div class="big_gap_card">
+
+
+
+<div class="card_header">
+            <h1 style="line-height:0.6rem;"> User Management </h1>
+            <h3>Details of all companies and students</h3>
+</div>
+
+<div class="horozontal_card_net" style="all:inherit; background:#fff;">
+<h2 style="line-height:0.6rem;"> Company Management </h2>
+<table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Created At</th>
+        <th>Actions</th>
+        <th>Blacklist</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in companies %}
+      <tr>
+        <td>{{ c.id }}</td>
+        <td>{{ c.username }}</td>
+        <td>{{ c.cntct_mail }}</td>
+        <td>{{ c.approval_sts }}</td>
+        <td>{{ c.created_at_ }}</td>
+        {% if c.approval_sts == "Pending" %}
+            <td style="display: inline-flex; width: 100%; justify-content: space-evenly;">
+            <form action="{{ url_for('ad.approve_company', comp_id=c.id) }}", method="POST"><button class="button_flat2">Approve</button></form>
+            
+           <form action="{{ url_for('ad.reject_company', comp_id=c.id) }}", method="POST"><button class="button_flat2">Reject</button></form>
+           </td>
+            {%elif c.approval_sts == "Rejected"%} 
+            <td style="display: inline-flex; width: 100%; justify-content: space-evenly;">
+            <form action="{{ url_for('ad.approve_company', comp_id=c.id) }}", method="POST"><button class="button_flat2">Approve</button></form>
+            </td>
+            {%else%}
+            <td style = "display: table-cell;">
+            <button class="button_flat2 deactive" style="display: table-cell;">Approved</button>
+            </td>
+          {% endif %}
+        
+        <td >{% if c.is_active == True %}
+              <form action="{{ url_for('ad.blacklist_company', comp_id=c.id) }}", method="POST" style="justify-content: center;display: flex;"><button class="button_flat2">Blacklist</button></form>
+              {%elif c.is_active == False%}
+              <form action="{{ url_for('ad.un_blacklist_company', comp_id=c.id) }}", method="POST" style="justify-content: center;display: flex;"><button class="button_flat2">Unblacklist</button></form>
+              {%else%}
+        {% endif %}</td>
+    </tr>
+      {% endfor %}
+    </tbody>
+</table>
+</div>
+
+<div class="horozontal_card_net" style="all:inherit; background:#fff;">
+<h2 style="line-height:0.6rem;"> Student Management </h2>
+<table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Roll no.</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Department</th>
+        <th>Graduation Year</th>
+        <th>Blacklist</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in students %}
+      <tr>
+        <td>{{ s.id }}</td>
+        <td>{{ s.username }}</td>
+        <td>{{ s.name }}</td>
+        <td>{{ s.email }}</td>
+        <td>{{ s.dept_id }}</td>
+        <td>{{ s.grad_yr }}</td>
+        <td >{% if s.is_blacklisted == False %}
+              <form action="{{ url_for('ad.blacklist_student', std_id=s.id) }}", method="POST" style="justify-content: center; display: flex;"><button class="button_flat2">Blacklist</button></form>
+              {%elif s.is_blacklisted == True %}
+              <form action="{{ url_for('ad.un_blacklist_student', std_id=s.id) }}", method="POST" style="justify-content: center; display: flex;"><button class="button_flat2">Unblacklist</button></form>
+              {%else%}
+        {% endif %}</td>
+    </tr>
+      {% endfor %}
+    </tbody>
+</table>
+</div>
+
+{%endblock%}

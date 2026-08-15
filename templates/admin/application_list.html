@@ -1,0 +1,47 @@
+{% extends 'layout_2.html' %}
+
+{% block content %}
+
+<div class="big_gap_card">
+  <div class="card_header">
+    <h1 style="line-height:0.6rem;">Student Applications</h1>
+    <h3>Details of all placements</h3>
+  </div>
+
+  <table style="background:#fff; width:100%">
+    <thead>
+      <tr>
+        <th>Drive ID</th>
+        <th>Job Title</th>
+        <th>Student Name</th>
+        <th>Student Roll no.</th>
+        <th>Current CGPA</th>
+        <th>Application Created At</th>
+        <th>Application Status</th>
+        <th>Resume</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+        <tr>
+          <td>{{ row.drive.id }}</td>
+          <td>{{ row.drive.job_title }}</td>
+          <td>{{ row.student.name }}</td>
+          <td>{{ row.student.username }}</td>
+          <td>{{ row.student.current_cgpa }}</td>
+          <td>{{ row.application.created_at_ }}</td>
+          <td>{{ row.application.sts }}</td>
+          <td style="display:flex; justify-content: center;">
+            
+              <a href="{{ url_for('ad.a_download_resume', std_id=row.student.id) }}" class="button_flat" style="width:max-content;">
+                Download Resume
+              </a>
+            
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

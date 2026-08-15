@@ -1,0 +1,18 @@
+{% extends 'forms.html' %}
+
+{% block heading %}
+    Edit Company Profile
+{% endblock %}
+
+{% block description %}
+    Change your comapny details
+{% endblock %}
+
+{% block inline %}
+    <div>{{ form.username.label }} {{ form.username()}} </div>
+    <div>{{ form.name.label }} {{ form.name() }}</div>
+    <div>{{ form.cntct_mail.label }} {{ form.cntct_mail() }}</div> 
+    <div>{{ form.website.label }} {{ form.website() }}</div>
+    
+    {{ form.submit() }}
+{% endblock %}

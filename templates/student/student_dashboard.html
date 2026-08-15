@@ -1,0 +1,90 @@
+{% extends 'layout_2.html' %}
+
+{% block content %}
+
+<div class="big_gap_card">
+
+
+<div class="med_gap_card">
+    
+    <div class="horizontal_cards_content">
+        <div class="card_header" style="margin:0; padding:0.4rem;">
+            <h3 style="color: var(--grey-8);">Active Placement Drives</h3>
+            <h1 style="margin-bottom:0.4rem; margin-top:0rem;">{{d_active}}</h1>
+        </div>
+        <p style="color: var(--grey-3);">Open for applicants</p>        
+    </div> 
+    
+    <div class="horizontal_cards_content">
+        <div class="card_header" style="margin:0; padding:0.4rem;">
+            <h3 style="color: var(--grey-8);">My Applications</h3>
+            <h1 style="margin-bottom:0.4rem; margin-top:0rem;">{{a_t}}</h1>
+        </div>
+        <p style="color: var(--grey-3);">Total submitted</p>        
+    </div>
+
+    <div class="horizontal_cards_content">
+        <div class="card_header" style="margin:0; padding:0.4rem;">
+            <h3 style="color: var(--grey-8);">Applications Shortlisted</h3>
+            <h1 style="margin-bottom:0.4rem; margin-top:0rem;">{{a_sh}}</h1>
+        </div>
+        <p style="color: var(--grey-3);">In progress</p>        
+    </div>
+
+    <div class="horizontal_cards_content">
+        <div class="card_header" style="margin:0; padding:0.4rem;">
+            <h3 style="color: var(--grey-8);">Applications Selected</h3>
+            <h1 style="margin-bottom:0.4rem; margin-top:0rem;">{{a_se}}</h1>
+        </div>
+        <p style="color: var(--grey-3);"> Accepted by company</p>        
+    </div>
+    
+    
+</div>
+
+<div class = "horizontal_card_net">
+    <div class="card_header">
+            <h1 style="line-height:0.6rem;"> All Placement Drives </h1>
+            <h3>Details of all placement drives</h3>
+</div>
+
+<table>
+    <thead>
+      <tr>
+        <th>Drive ID</th>
+        <th>Job Title</th>
+        <th>Elegibility Criteria</th>
+        <th>Location</th>
+        <th>Application Deadline</th>
+        <th>Application Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+        {% if row.d.is_closed == True %}
+        <tr class="deactive">
+            <td>{{ row.d.id }}</td>
+            <td>{{ row.d.job_title }}</td>
+            <td>{{ row.d.el_criteria }}</td>
+            <td>{{ row.d.location }}</td>
+            <td>{{ row.d.app_deadline_ }}</td>
+            <td>{{row.n_app}}</td>
+        </tr> 
+        {%else%}
+        <tr>
+            <td>{{ row.d.id }}</td>
+            <td>{{ row.d.job_title }}</td>
+            <td>{{ row.d.el_criteria }}</td>
+            <td>{{ row.d.location }}</td>
+            <td>{{ row.d.app_deadline_ }}</td>
+            <td>{{row.n_app}}</td>
+        </tr> 
+        {% endif %}
+        
+      {% endfor %}
+    </tbody>
+</table>  
+</div>
+</div>
+{% endblock %}
+

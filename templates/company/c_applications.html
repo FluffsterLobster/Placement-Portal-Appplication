@@ -1,0 +1,119 @@
+{% extends 'layout_2.html' %}
+
+{% block content %}
+<div class="big_gap_card">
+  <div class="card_header">
+    <h1 style="line-height:0.6rem;">Student Applications</h1>
+    <h3>Details of all applications received</h3>
+  </div>
+
+<div class="horizontal_card_net header_content drive-header" style="background:#EDF5FF">
+  <h2 >Ongoing Placement Drives</h2>
+  {% for rows_ in rows__ %}
+    {% if rows_.rows and rows_.drive.is_closed == False and rows_.drive.sts == "Approved"%}
+     
+      <div class="horizontal_card_net header_content drive-header" style="background:var(--blue-1)">
+        <div>
+          <h2 style="color: var(--grey-8)">{{ rows_.drive.job_title }}</h2>
+          <h3>Location: {{ rows_.drive.location }}, Salary: {{ rows_.drive.salary or 'Not specified' }}</h3>
+          <span style="color: var(--grey-6); font-size: 0.9rem;">{{ rows_.rows|length }} Applications</span>
+        </div>
+      
+
+      
+      {% for row in rows_.rows %}
+        <div class="horizontal_card_net header_content">
+          <div>
+            <h2 style="color: var(--grey-8)">{{ row.student.name }}</h2>
+            <h3>{{ row.student.username }}</h3>
+          </div>
+          
+          
+            <div class="header_content">
+              <form action="{{ url_for('cp.c_download_resume', std_id=row.student.id) }}" method="GET" style="display: inline;">
+                <button class="button_flat">Download Resume</button>
+              </form>
+              <div class="med_gap_card">
+                {% if row.application.sts == "Applied" %}
+                  <form action="{{ url_for('cp.shortlist_applications', app_id=row.application.id) }}" method="POST" style="display: inline;">
+                    <button class="button_flat">Shortlist</button>
+                  </form>
+                  <form action="{{ url_for('cp.reject_applications', app_id=row.application.id) }}" method="POST" style="display: inline;">
+                    <button class="button_flat">Reject</button>
+                  </form>
+                {% elif row.application.sts == "Shortlisted" %}
+                  <form action="{{ url_for('cp.select_applications', app_id=row.application.id) }}" method="POST" style="display: inline;">
+                    <button class="button_flat">Select</button>
+                  </form>
+                  <form action="{{ url_for('cp.reject_applications', app_id=row.application.id) }}" method="POST" style="display: inline;">
+                    <button class="button_flat">Reject</button>
+                  </form>
+                {% else %}
+                  <span class="button_flat deactive"> Status: {{ row.application.sts }} </span>
+                {% endif %}
+              </div>
+            </div>
+          
+        </div>
+      {% endfor %}
+      </div>
+    {% endif %}
+  {% endfor %}
+  </div>
+
+
+  <div class="horizontal_card_net header_content drive-header" style="background:#EDF5FF">
+  <h2>Past Placement Drives</h2>
+  {% for rows_ in rows__ %}
+    {% if rows_.rows and rows_.drive.is_closed == True and rows_.drive.sts == "Approved"%}
+     
+      <div class="horizontal_card_net header_content drive-header" style="background:var(--blue-1)">
+        <div>
+          <h2 style="color: var(--grey-8)">{{ rows_.drive.job_title }}</h2>
+          <h3>Location: {{ rows_.drive.location }}, Salary Offered: {{ rows_.drive.salary or 'Not specified' }}</h3>
+          <span style="color: var(--grey-6); font-size: 0.9rem;">{{ rows_.rows|length }} Applications</span>
+        </div>
+      
+
+      
+      {% for row in rows_.rows %}
+        <div class="horizontal_card_net header_content">
+          <div>
+            <h2 style="color: var(--grey-8)">{{ row.student.name }}</h2>
+            <h3>{{ row.student.username }}</h3>
+          </div>
+          
+          
+            <div class="header_content">
+              <form action="{{ url_for('sd.s_download_resume', std_id=row.student.id) }}" method="GET" style="display: inline;">
+                <button class="button_flat">Download Resume</button>
+              </form>
+              <div class="med_gap_card">
+                {% if row.application.sts == "Applied" %}
+                  <form action="{{ url_for('cp.shortlist_applications', app_id=row.application.id) }}" method="POST" style="display: inline;">
+                    <button class="button_flat">Shortlist</button>
+                  </form>
+                  <form action="{{ url_for('cp.reject_applications', app_id=row.application.id) }}" method="POST" style="display: inline;">
+                    <button class="button_flat">Reject</button>
+                  </form>
+                {% elif row.application.sts == "Shortlisted" %}
+                  <form action="{{ url_for('cp.select_applications', app_id=row.application.id) }}" method="POST" style="display: inline;">
+                    <button class="button_flat">Select</button>
+                  </form>
+                  <form action="{{ url_for('cp.reject_applications', app_id=row.application.id) }}" method="POST" style="display: inline;">
+                    <button class="button_flat">Reject</button>
+                  </form>
+                {% else %}
+                  <span class="button_flat deactive">Status: {{ row.application.sts }}</span>
+                {% endif %}
+              </div>
+            </div>
+          
+        </div>
+      {% endfor %}
+      </div>
+    {% endif %}
+  {% endfor %}
+  </div>
+</div>
+{% endblock %}

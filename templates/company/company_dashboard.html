@@ -1,0 +1,63 @@
+{% extends 'layout_2.html' %}
+
+{% block content %}
+
+<div class="big_gap_card">
+
+
+<div class="med_gap_card">
+    <div class="horizontal_cards_content">
+        <div class="card_header" style="margin:0; padding:0.4rem;">
+            <h3 style="color: var(--grey-8);">Active Drives</h3>
+            <h1 style="margin-bottom:0.4rem; margin-top:0rem;">{{d_active}}</h1>
+        </div>
+        <p style="color: var(--grey-3);">Open for applicants</p>        
+    </div>
+
+
+    <div class="horizontal_cards_content">
+        <div class="card_header" style="margin:0; padding:0.4rem;">
+            <h3 style="color: var(--grey-8);">Total Drives Created</h3>
+            <h1 style="margin-bottom:0.4rem; margin-top:0rem;">{{pd}}</h1>
+        </div>
+        <p style="color: var(--grey-3);">Total drives created by the company</p>        
+    </div>
+
+
+    <div class="horizontal_cards_content">
+        <div class="card_header" style="margin:0; padding:0.4rem;">
+            <h3 style="color: var(--grey-8);">Total Applicants</h3>
+            <h1 style="margin-bottom:0.4rem; margin-top:0rem;">{{ap}}</h1>
+        </div>
+        <p style="color: var(--grey-3);">Number of applications received from all drives</p>        
+    </div>
+    
+</div>
+
+<div class = "horizontal_card_net" style="background:var(--blue-1); display: grid; grid-template-columns: 1fr 1fr;">
+    <h2 style="color: var(--grey-8)">Number of applications received</h2>
+    <p></p>
+    
+        {% for row in rows %}
+        <div class="horizontal_card_net" style="flex-direction:row; display:inline-flex; justify-content:space-between">
+            <div><h2 style="color: var(--grey-8)">{{row.d.job_title}}</h2>
+        <h3>Location: {{row.d.location}}, Salary Offered:{{row.d.salary}}</h3></div>
+
+        <div class="button_flat2">
+          <h2>{{row.n_app}} </h2>
+        </div>
+        </div>
+        {% endfor %}
+        
+            
+    
+    
+
+</div>
+</div>
+
+
+
+
+{% endblock %}
+

@@ -1,0 +1,57 @@
+{% extends 'layout_2.html' %}
+
+{% block content %}
+
+<div class="big_gap_card">
+
+
+<div class="small_gap_card card_header" style="justify-content:space-between; flex-direction:row; padding-bottom:0rem">
+    <h1> Placement Drives</h1>
+    <div class="button_flat2"> <a href = "{{url_for('cp.create_drives')}}"> Create Placement Drives</a></div>
+</div>
+
+<div class="horizontal_card_net" style="background:var(--blue-1)">
+<h2>Active Drives</h2>
+{% for d in drives %}
+    {% if d.is_closed == False %}
+    
+
+    <div class="horizontal_card_net" style="padding: 1rem 2rem 1rem 2rem">
+        <div><h2 style="color: var(--grey-8)">{{d.job_title}}</h2>
+        <h3>Location: {{d.location}}, Salary Offered:{{d.salary}}</h3></div>
+        <p style="margin:0">{{d.sts}}</p>
+        <div style="justify-content:space-between; flex-direction:row; width:100%; display:flex;" >
+            <div class="med_gap_card">
+                <form action="{{ url_for('cp.close_drive', drive_id=d.id) }}", method="POST"><button class="button_flat">Close Drive</button></form>
+                <form action="{{ url_for('cp.delete_drive', drive_id=d.id) }}", method="POST"><button class="button_flat">Delete Drive</button></form>
+            </div>
+            <div class="button_flat2" style="align-self:center"><a href = "{{url_for('cp.edit_drives', id = d.id)}}"> Edit drive details</a></div>
+        </div>
+        
+    </div>
+    {% endif %}
+{% endfor %}
+</div>
+
+<div class="horizontal_card_net" style="background:var(--blue-1)">
+<h2>Past Drives</h2>
+<h3>Drives have been closed and further applications are not accepted</h3>
+{% for d in drives %}
+    {% if d.is_closed == True %}
+    
+
+    <div class="horizontal_card_net">
+        <div><h2 style="color: var(--grey-8)">{{d.job_title}}</h2>
+        <h3>Location: {{d.location}}, Salary:{{d.salary}}</h3></div>
+        <p style="margin:0">{{d.sts}}</p>
+
+        
+    </div>
+    {% endif %}
+{% endfor %}
+</div>
+
+
+{% endblock %}
+
+</div>

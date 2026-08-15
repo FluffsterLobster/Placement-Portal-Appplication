@@ -1,0 +1,109 @@
+{% extends 'layout_2.html' %}
+
+{% block content%}
+
+
+<div class="big_gap_card">
+
+
+<div class="med_gap_card">
+    <div class="horizontal_cards_content">
+        <div class="card_header" style="margin:0; padding:0.4rem;">
+            <h3 style="color: var(--grey-8);">Total Students</h3>
+            <h1 style="margin-bottom:0.4rem; margin-top:0rem;">{{info.s}}</h1>
+        </div>
+        <p style="color: var(--grey-3);">Students registered from all departments</p>        
+    </div>
+
+    <div class="horizontal_cards_content">
+        <div class="card_header" style="margin:0; padding:0.4rem;">
+            <h3 style="color: var(--grey-8);">Total Company</h3>
+            <h1 style="margin-bottom:0.4rem; margin-top:0rem;">{{info.c}}</h1>
+        </div>
+        <p style="color: var(--grey-3);">Number of company registered </p>        
+    </div>
+
+    <div class="horizontal_cards_content">
+        <div class="card_header" style="margin:0; padding:0.4rem;">
+            <h3 style="color: var(--grey-8);">Approved Drives</h3>
+            <h1 style="margin-bottom:0.4rem; margin-top:0rem;">{{info.p}}</h1>
+        </div>
+        <p style="color: var(--grey-3);">Number of approved drives </p>        
+    </div>
+
+    <div class="horizontal_cards_content">
+        <div class="card_header" style="margin:0; padding:0.4rem;">
+            <h3 style="color: var(--grey-8);">Total Applications</h3>
+            <h1 style="margin-bottom:0.4rem; margin-top:0rem;">{{info.a}}</h1>
+        </div>
+        <p style="color: var(--grey-3);">Number of applications received </p>        
+    </div>
+    
+</div>
+
+<div class = "horizontal_card_net" style="background:#EDF5FF">
+<h2>Student Placement Statistics</h2> 
+<div class="med_gap_card" style="width:100%">  
+    <div class = "horizontal_card_net" style="width:stretch; display:block ">
+        <div class="chart-container">
+            <canvas id="studentChart" style="align-self:flex-start; display:flex"></canvas>
+        </div>
+    </div>
+<div class = "horizontal_card_net" style="justify-content:flex-start; padding-top:3rem; width:100%; gap:0rem">
+    <h2>Number of student applications: {{info.a}}</h2>
+    <ul>Applications Shortlisted: {{info.sts_sh}}</ul>
+    <ul >Applications Selected: {{info.sts_se}}</ul>
+    <ul >Applications Rejected: {{info.sts_re}}</ul>
+    <ul >Response not received: {{info.sts_app}}</ul>
+
+    
+<div class = "horizontal_card_net" style="justify-content:flex-start; padding-top:3rem; width:100%; gap:0rem">
+    <h2>Placement Drives requests: {{info.p}}</h2>
+    <ul>Approved: {{info.drv_app}}</ul>
+    <ul >Rejected: {{info.drv_rej}}</ul>
+    <ul >Under Verification: {{info.drv_pen}}</ul>
+</div>
+</div>
+    
+
+</div> 
+
+</div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+    {{super()}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+            
+
+        const ctx = document.getElementById('studentChart').getContext('2d');
+        
+        const data = {{chart_data|tojson|safe}};
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Student Application Status Distribution',
+                        font: { size: 18 }
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+</script>
+
+
+
+{% endblock %}
+

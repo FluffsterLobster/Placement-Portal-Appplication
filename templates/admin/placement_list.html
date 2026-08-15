@@ -1,0 +1,55 @@
+{% extends 'layout_2.html' %}
+
+{% block content %}
+
+<div class="big_gap_card">
+
+
+
+<div class="card_header">
+            <h1 style="line-height:0.6rem;"> Placement Management </h1>
+            <h3>Details of all placements</h3>
+</div>
+<div class="horizontal_card_net" style="width:100%; background:#fff">
+<table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Company Name</th>
+        <th>Job Title</th>
+        <th>Eligibility Criteria</th>
+        <th>Location</th>
+        <th>Application Deadline</th>
+        <th>Created At</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for d in drives %}
+      <tr>
+        <td>{{ d.id }}</td>
+        <td>{{ d.username }}</td>
+        <td>{{ d.job_title }}</td>
+        <td>{{ d.el_criteria }}</td>
+        <td>{{ d.location }}</td>
+        <td>{{ d.app_deadline_ }}</td>
+        <td>{{ d.created_at_ }}</td>
+        <td style="display: flex; justify-content:center;">{% if d.sts == "Pending" %}
+            <form action="{{ url_for('ad.approve_drive', drive_id=d.id) }}", method="POST"><button class="button_flat">Approve</button></form>
+            
+           <form action="{{ url_for('ad.reject_drive', drive_id=d.id) }}", method="POST"><button class="button_flat">Reject</button></form>
+           {% elif d.sts == "Approved" %}
+            <form action="{{ url_for('ad.reject_drive', drive_id=d.id) }}", method="POST"><button class="button_flat">Reject</button></form>
+            {%else%}
+            <div class="button_flat2" style="margin:1rem 0rem 1rem 0rem">Rejected</div>
+          {% endif %}
+        </td>
+    </tr>
+      {% endfor %}
+    </tbody>
+</table>
+</div>
+</div>
+
+{%endblock%}
+
